@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-7#08wjqi$wmor17=zixwqn6(g-n(wm8!(*z7+@c71i^usi)62)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gold-loan-system.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
