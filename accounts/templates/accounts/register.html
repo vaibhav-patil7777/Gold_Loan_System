@@ -7,231 +7,49 @@
 <title>Register - Gold Loan System</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #000;
-  }
-
-  /* 🎥 Background Video */
-  video#bgVideo {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -2;
-    filter: brightness(60%);
-  }
-
-  /* 🟡 Glass Register Card */
-  .register-box {
-    position: relative;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-    width: 380px;
-    padding: 40px 35px;
-    text-align: center;
-    color: white;
-    animation: fadeIn 1.2s ease-in-out;
-  }
-
-  /* 🔥 Glow Border Animation */
-  .register-box::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 20px;
-    background: linear-gradient(45deg, #d4af37, #f5e2a9, #d4af37);
-    z-index: -1;
-    filter: blur(15px);
-    opacity: 0.7;
-  }
-
-  h2 {
-    font-size: 26px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 10px;
-  }
-
-  p {
-    color: #e0e0e0;
-    font-size: 14px;
-    margin-bottom: 25px;
-  }
-
-  input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    font-size: 15px;
-    outline: none;
-    transition: 0.3s;
-  }
-
-  input::placeholder {
-    color: #eee;
-  }
-
-  input:focus {
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 8px #d4af37;
-  }
-
-  button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 16px;
-    background: linear-gradient(90deg, #d4af37, #f5e2a9);
-    color: #000;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #f5e2a9;
-  }
-
-  a {
-    display: block;
-    color: #f5e2a9;
-    font-size: 14px;
-    margin-top: 15px;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-
-  /* 🟠 Password Suggestion Box */
-  .password-hint {
-    text-align: left;
-    font-size: 13px;
-    margin-top: 8px;
-    color: #f5e2a9;
-    background: rgba(255,255,255,0.1);
-    padding: 10px;
-    border-radius: 10px;
-    display: none;
-  }
-
-  .valid { color: #00ff99; }
-  .invalid { color: #ff6961; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 480px) {
-    .register-box {
-      width: 90%;
-      padding: 30px;
-    }
-  }
+  body {margin:0;padding:0;font-family:'Poppins',sans-serif;height:100vh;overflow:hidden;display:flex;justify-content:center;align-items:center;background:#000;}
+  video#bgVideo{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:brightness(60%);}
+  .register-box{position:relative;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);border-radius:20px;backdrop-filter:blur(20px);box-shadow:0 0 30px rgba(212,175,55,0.4);width:380px;padding:40px 35px;text-align:center;color:white;}
+  .register-box::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;border-radius:20px;background:linear-gradient(45deg,#d4af37,#f5e2a9,#d4af37);z-index:-1;filter:blur(15px);opacity:0.7;}
+  h2{font-size:26px;font-weight:700;color:#fff;margin-bottom:10px;}
+  p{color:#e0e0e0;font-size:14px;margin-bottom:25px;}
+  input{width:100%;padding:12px;margin:10px 0;border:none;border-radius:10px;background:rgba(255,255,255,0.2);color:#fff;font-size:15px;outline:none;transition:0.3s;}
+  input::placeholder{color:#eee;}
+  input:focus{background:rgba(255,255,255,0.3);box-shadow:0 0 8px #d4af37;}
+  button{width:100%;padding:12px;margin-top:15px;border:none;border-radius:10px;font-weight:600;font-size:16px;background:linear-gradient(90deg,#d4af37,#f5e2a9);color:#000;cursor:pointer;transition:0.3s;}
+  button:hover{transform:scale(1.05);box-shadow:0 0 20px #f5e2a9;}
+  a{display:block;color:#f5e2a9;font-size:14px;margin-top:15px;text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .message-box{background:rgba(0,0,0,0.4);padding:10px;border-radius:10px;margin-bottom:10px;color:#00ff99;font-weight:600;}
 </style>
 </head>
 <body>
 
-  <!-- 🎥 Background Video -->
-  <video autoplay muted loop id="bgVideo">
-    <source src="{% static 'videos/gold.mp4' %}" type="video/mp4">
-  </video>
+<video autoplay muted loop id="bgVideo">
+  <source src="{% static 'videos/gold.mp4' %}" type="video/mp4">
+</video>
 
-  <!-- 🟡 Register Box -->
-  <div class="register-box">
-    <h2>Create Account</h2>
-    <p>Register to start using Gold Loan System</p>
+<div class="register-box">
+  <h2>Create Account</h2>
+  <p>Register to start using Gold Loan System</p>
 
-    <form method="POST">
-      {% csrf_token %}
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="email" name="email" placeholder="Email" required>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="message-box">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
 
-      <!-- Password Field with Suggestion -->
-      <input type="password" id="password" name="password" placeholder="Password" required>
-      <div id="passwordHint" class="password-hint">
-        <p id="length" class="invalid">• Minimum 8 characters</p>
-        <p id="upper" class="invalid">• At least 1 uppercase letter</p>
-        <p id="lower" class="invalid">• At least 1 lowercase letter</p>
-        <p id="number" class="invalid">• At least 1 number</p>
-        <p id="special" class="invalid">• At least 1 special character (!@#$%^&*)</p>
-      </div>
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+    <button type="submit">Register</button>
+  </form>
 
-      <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-      <button type="submit">Register</button>
-    </form>
-
-    <a href="{% url 'login' %}">Already have an account? Login</a>
-  </div>
-
-<script>
-  const password = document.getElementById("password");
-  const hint = document.getElementById("passwordHint");
-
-  const length = document.getElementById("length");
-  const upper = document.getElementById("upper");
-  const lower = document.getElementById("lower");
-  const number = document.getElementById("number");
-  const special = document.getElementById("special");
-
-  password.onfocus = () => hint.style.display = "block";
-  password.onblur = () => hint.style.display = "none";
-
-  password.onkeyup = () => {
-    const value = password.value;
-
-    // Length
-    value.length >= 8 ? valid(length) : invalid(length);
-
-    // Uppercase
-    /[A-Z]/.test(value) ? valid(upper) : invalid(upper);
-
-    // Lowercase
-    /[a-z]/.test(value) ? valid(lower) : invalid(lower);
-
-    // Number
-    /\d/.test(value) ? valid(number) : invalid(number);
-
-    // Special
-    /[!@#$%^&*]/.test(value) ? valid(special) : invalid(special);
-  };
-
-  function valid(el) {
-    el.classList.add("valid");
-    el.classList.remove("invalid");
-  }
-
-  function invalid(el) {
-    el.classList.add("invalid");
-    el.classList.remove("valid");
-  }
-</script>
+  <a href="{% url 'login' %}">Already have an account? Login</a>
+</div>
 
 </body>
 </html>
