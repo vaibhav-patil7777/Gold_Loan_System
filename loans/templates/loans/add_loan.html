@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Loan - Gold Loan System</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-y: auto;
+    }
+
+    video#bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(70%) contrast(110%);
+    }
+
+    .form-box {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      padding: 30px;
+      width: 360px;
+      text-align: center;
+      margin: 60px auto;
+      backdrop-filter: blur(10px);
+    }
+
+    h2 {
+      color: #ffd700;
+      margin-bottom: 20px;
+      font-size: 22px;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      color: #f1f1f1;
+      margin-bottom: 5px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #eef2ff;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #000;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(to right, #ffd700, #ffcc33);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .message {
+      color: #00ff99;
+      background: rgba(0, 255, 0, 0.1);
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+
+    .download-btn {
+      margin-top: 10px;
+      background: linear-gradient(to right, #00ff99, #00cc66);
+      color: black;
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        width: 90%;
+        padding: 25px;
+      }
+      .back-btn {
+        top: 15px;
+        right: 15px;
+        font-size: 13px;
+        padding: 5px 12px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <video autoplay muted loop id="bgVideo">
+    <source src="{% static 'videos/gold.mp4' %}" type="video/mp4">
+  </video>
+  <button class="back-btn" onclick="window.location.href='{% url 'dashboard' %}'">Back</button>
+
+  <div class="form-box">
+    <h2>💰 Add Loan for {{ customer.name }}</h2>
+
+    {% if messages %}
+      <div class="message">
+        {% for msg in messages %}
+          {{ msg }}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <label>Select Gold Item:</label>
+      <select name="gold_item" required>
+        <option value="" disabled selected>-- Select Gold Item --</option>
+        {% for gold in gold_items %}
+          <option value="{{ gold.id }}">{{ gold.gold_type }} ({{ gold.weight }}g, ₹{{ gold.valuation }})</option>
+        {% endfor %}
+      </select>
+
+      <label>Loan Amount (₹):</label>
+      <input type="number" name="loan_amount" required>
+
+      <label>Interest Rate (%):</label>
+      <input type="number" name="interest_rate" required>
+
+      <label>Loan Type:</label>
+      <select name="loan_type" required>
+        <option value="Normal">Normal</option>
+        <option value="EMI">EMI</option>
+      </select>
+
+      <label>Duration Type:</label>
+      <select name="duration_type" required>
+        <option value="Months">Months</option>
+        <option value="Years">Years</option>
+      </select>
+
+      <label>Duration Value:</label>
+      <input type="number" name="duration_value" required>
+
+      <label>Start Date:</label>
+      <input type="date" name="start_date" required>
+
+      <button type="submit">Generate Loan ➡️</button>
+    </form>
+
+    {% if show_receipt %}
+      <a href="{% url 'download_receipts' loan.id %}">
+        <button class="download-btn">⬇️ Download Your Receipt</button>
+      </a>
+    {% endif %}
+  </div>
+
+</body>
+</html>

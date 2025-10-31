@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Customer - Gold Loan System</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+    }
+
+    /* 🎥 Background Video */
+    video#bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      filter: brightness(60%);
+    }
+
+    /* 🔙 Small Back Button (top-right corner) */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: inline-block;
+      width: auto;
+      background: linear-gradient(90deg, #d4af37, #f5e2a9);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 16px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+      transition: 0.3s ease;
+      z-index: 10;
+    }
+
+    .back-btn:hover {
+      background: #f5e2a9;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #f5e2a9;
+    }
+
+    /* 🟡 Glass Form Card */
+    .form-container {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+      width: 400px;
+      padding: 35px 40px;
+      text-align: center;
+      color: white;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .form-container h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #f5e2a9;
+      margin-bottom: 25px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input::placeholder {
+      color: #eee;
+    }
+
+    input:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 8px #d4af37;
+    }
+
+    button {
+      background: linear-gradient(90deg, #d4af37, #f5e2a9);
+      color: #000;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #f5e2a9;
+    }
+
+    .msg {
+      background: rgba(0, 255, 0, 0.2);
+      color: #00ff99;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        width: 90%;
+        padding: 25px;
+      }
+      .back-btn {
+        top: 15px;
+        right: 15px;
+        font-size: 13px;
+        padding: 5px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎥 Background Video -->
+  <video autoplay muted loop id="bgVideo">
+    <source src="{% static 'videos/gold.mp4' %}" type="video/mp4">
+  </video>
+
+  <!-- 🔙 Small Back Button -->
+  <button class="back-btn" onclick="window.location.href='{% url 'dashboard' %}'">Back</button>
+
+  <!-- ✨ Form Section -->
+  <div class="form-container">
+    <h2>🧾 Add New Customer</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="msg">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" name="name" placeholder="Customer Name" required>
+      <input type="text" name="mobile" placeholder="Mobile Number" required>
+      <input type="text" name="address" placeholder="Address" required>
+      <input type="text" name="aadhaar" placeholder="Aadhaar Number" required>
+      <input type="text" name="pan" placeholder="PAN Number" required>
+      <input type="date" name="dob" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <button type="submit">Next → Add Gold</button>
+    </form>
+  </div>
+
+</body>
+</html>

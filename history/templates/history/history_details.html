@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+/* 🔹 Page Layout */
+body {
+    color: #fff;
+}
+
+.history-wrapper {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    color: #f1f1f1;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* 🔹 Title Styling */
+.page-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* 🔹 Section Boxes */
+.section-box {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    transition: 0.3s;
+}
+.section-box:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* 🔹 Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+    margin-top: 15px;
+}
+th, td {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    text-align: center;
+}
+th {
+    background: rgba(0, 0, 0, 0.4);
+    color: #ffd166;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+td {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 🔹 Buttons */
+.back-btn {
+    background: #ffd166;
+    color: #1d3557;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+.back-btn:hover {
+    background: #fca311;
+    transform: scale(1.05);
+}
+
+.btn-download {
+    background: #06d6a0;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.btn-download:hover {
+    background: #04b485;
+}
+
+/* 🔹 Loan Box */
+.loan-box {
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 5px solid #ffd166;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+.loan-box:hover {
+    transform: translateY(-3px);
+    background: rgba(0, 0, 0, 0.45);
+}
+
+/* 🔹 Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<div class="history-wrapper">
+    <h2 class="page-title">📜 Full History of {{ customer.name }}</h2>
+    <button class="back-btn" onclick="window.location.href='{% url 'dashboard' %}'">⬅ Back</button>
+
+    <!-- 🧍 Customer Information -->
+    <div class="section-box">
+        <h3>👤 Customer Information</h3>
+        <table>
+            <tr><th>Name</th><td>{{ customer.name }}</td></tr>
+            <tr><th>Mobile</th><td>{{ customer.mobile }}</td></tr>
+            <tr><th>Email</th><td>{{ customer.email }}</td></tr>
+            <tr><th>Aadhaar</th><td>{{ customer.aadhaar }}</td></tr>
+            <tr><th>PAN</th><td>{{ customer.pan }}</td></tr>
+            <tr><th>Address</th><td>{{ customer.address }}</td></tr>
+            <tr><th>Date of Birth</th><td>{{ customer.dob }}</td></tr>
+        </table>
+    </div>
+
+    <!-- 🏆 Gold Items -->
+    <div class="section-box">
+        <h3>🏆 Gold Items</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Weight (g)</th>
+                    <th>Purity</th>
+                    <th>Estimated Value (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gold in gold_items %}
+                <tr>
+                    <td>{{ gold.gold_type }}</td>
+                    <td>{{ gold.weight }}</td>
+                    <td>{{ gold.purity }}</td>
+                    <td>₹{{ gold.valuation }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No gold items found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 💰 Loan Summary -->
+    <div class="section-box">
+        <h3>💰 Loan Summary</h3>
+        <p><b>Total Loans:</b> {{ loans.count }}</p>
+        <p><b>Completed Loans:</b> {{ completed_loans.count }}</p>
+        <p><b>Active Loans:</b> {{ active_loans.count }}</p>
+    </div>
+
+    <!-- 🏦 Loan Details -->
+    {% for loan in loans %}
+    <div class="loan-box">
+        <h3>🏦 Loan #{{ loan.id }}</h3>
+        <table>
+            <tr><th>Loan Amount</th><td>₹{{ loan.loan_amount }}</td></tr>
+            <tr><th>Interest Rate</th><td>{{ loan.interest_rate }}%</td></tr>
+            <tr><th>Duration</th><td>{{ loan.duration_months }} months</td></tr>
+            <tr><th>Status</th><td>{{ loan.status }}</td></tr>
+            <tr><th>Start Date</th><td>{{ loan.start_date }}</td></tr>
+            <tr><th>End Date</th><td>{{ loan.end_date }}</td></tr>
+        </table>
+
+        <h4 style="margin-top:15px;">💳 Payments for Loan #{{ loan.id }}</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Payment ID</th>
+                    <th>Name & Type</th>
+                    <th>Amount Paid (₹)</th>
+                    <th>Remaining (₹)</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pay in payments %}
+                    {% if pay.loan.id == loan.id %}
+                    <tr>
+                        <td>{{ pay.id }}</td>
+                        <td>{{ pay.loan }}</td>
+                        <td>₹{{ pay.amount_paid }}</td>
+                        <td>₹{{ pay.remaining_amount }}</td>
+                        <td>{{ pay.payment_date }}</td>
+                    </tr>
+                    {% endif %}
+                {% empty %}
+                <tr><td colspan="5">No payments found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% empty %}
+    <p>No loans found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

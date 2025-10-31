@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+/* 🌟 Elegant Gold Theme */
+.payment-wrapper {
+  max-width: 900px;
+  margin: 80px auto;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 30px 40px;
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🔹 Header */
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.payment-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffd166, #fca311);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.back-btn {
+  background: linear-gradient(135deg, #ffd166, #fca311);
+  color: #1d3557;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.back-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #fca311, #ffd166);
+}
+
+/* 🔹 Customer Info */
+.customer-info {
+  background: rgba(0, 0, 0, 0.4);
+  border-left: 5px solid #ffd166;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  color: #fff;
+}
+
+/* 🔹 Messages */
+.msg {
+  background: rgba(255, 215, 0, 0.2);
+  border-left: 5px solid #ffd166;
+  padding: 10px;
+  color: #fff3b0;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* 🔹 Form */
+form p label {
+  color: #ffd166;
+  font-weight: 600;
+}
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+  transition: 0.3s;
+}
+input:focus, select:focus {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 🔹 Button */
+button {
+  width: 100%;
+  background: linear-gradient(135deg, #ffd166, #fca311);
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  color: #1d3557;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background: linear-gradient(135deg, #fca311, #ffd166);
+  transform: scale(1.05);
+}
+
+/* 🔹 Download Button */
+.download-btn {
+  background: linear-gradient(135deg, #06d6a0, #118ab2);
+  color: white;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  display: inline-block;
+  transition: 0.3s;
+}
+.download-btn:hover {
+  background: linear-gradient(135deg, #118ab2, #06d6a0);
+}
+
+/* 🔹 Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+th, td {
+  text-align: center;
+  padding: 10px;
+}
+th {
+  background: linear-gradient(135deg, #fca311, #ffd166);
+  color: #1d3557;
+}
+td {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* ✅ Fix: Loan Name visible (black text for Name & Type column) */
+td:nth-child(2) {
+  color: #000 !important;
+  font-weight: 600;
+}
+
+tr:hover td {
+  background: rgba(255, 209, 102, 0.15);
+}
+
+/* 🔍 Search Box */
+.search-box {
+  text-align: right;
+  margin: 10px 0;
+}
+.search-box input {
+  width: 45%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+select option,
+select {
+  color: #000 !important;       /* Black text */
+  background-color: #f5f5f5;   /* Light background for clarity */
+}
+
+/* Optional: also for input fields */
+input, textarea {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+</style>
+
+<div class="payment-wrapper">
+  <div class="payment-header">
+    <h2>💳 Make Payment - {{ customer.name }}</h2>
+    <a href="{% url 'dashboard' %}" class="back-btn">⬅ Back</a>
+  </div>
+
+  <div class="customer-info">
+    <b>📞 Phone:</b> {{ customer.mobile }}<br>
+    <b>🏠 Address:</b> {{ customer.address }}
+  </div>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="msg">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">💳 Submit Payment</button>
+  </form>
+
+  {% if last_payment %}
+    <a href="{% url 'download_receipt' last_payment.id %}" class="download-btn">⬇ Download Latest Receipt</a>
+  {% endif %}
+
+  <h3 style="text-align:center; margin-top:25px; color:#ffd166;">🧾 Payment History</h3>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 Search by Loan ID or Date...">
+  </div>
+
+  <table id="paymentTable">
+    <tr>
+      <th>Loan ID</th>
+      <th>Name & Type</th>
+      <th>Amount Paid</th>
+      <th>Payment Date</th>
+      <th>Remaining</th>
+      <th>Receipt</th>
+    </tr>
+    {% for p in payments %}
+    <tr>
+      <td>{{ p.loan.id }}</td>
+      <td>{{ p.loan }}</td>
+      <td>₹{{ p.amount_paid }}</td>
+      <td>{{ p.payment_date }}</td>
+      <td>₹{{ p.remaining_amount }}</td>
+      <td>
+        <a href="{% url 'download_receipt' p.id %}" class="download-btn" style="padding:6px 12px;">Download</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6" style="color:#ccc;">No payment records found.</td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+<script>
+  // 🔍 Live Search
+  const searchInput = document.getElementById("searchInput");
+  const table = document.getElementById("paymentTable");
+  searchInput.addEventListener("keyup", function() {
+    const filter = this.value.toLowerCase();
+    const rows = table.getElementsByTagName("tr");
+    for (let i = 1; i < rows.length; i++) {
+      const cells = rows[i].getElementsByTagName("td");
+      let match = false;
+      for (let j = 0; j < cells.length; j++) {
+        if (cells[j].innerText.toLowerCase().includes(filter)) {
+          match = true;
+          break;
+        }
+      }
+      rows[i].style.display = match ? "" : "none";
+    }
+  });
+
+  // 🟢 ✅ FIXED: Now no auto-download
+  // Download happens only when user clicks the button.
+  document.querySelectorAll(".download-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const confirmed = confirm("Do you want to download this receipt?");
+      if (!confirmed) e.preventDefault();
+    });
+  });
+</script>
+{% endblock %}

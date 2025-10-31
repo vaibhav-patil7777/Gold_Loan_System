@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+/* 🌟 Profile Page Styling */
+.profile-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start; /* 👈 Changed from center to flex-start */
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  color: white;
+  padding-top: 80px; /* 👈 Added to lift content slightly upward */
+}
+
+/* 🎥 Background Video */
+.profile-section video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.45;
+  filter: brightness(70%);
+}
+
+/* 🌈 Profile Container */
+.profile-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  max-width: 600px;
+  animation: fadeIn 1.2s ease-in-out;
+  color: #e0f7fa;
+  margin-top: 60px; /* 👈 Box thoda upar dikhne ke liye adjust */
+}
+
+.profile-container h3 {
+  font-size: 30px;
+  color: #00e5ff;
+  margin-bottom: 25px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.profile-card {
+  text-align: left;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 20px 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 60px;
+}
+
+.profile-card p {
+  font-size: 18px;
+  margin: 12px 0;
+  color: #ffffff;
+}
+
+.profile-card strong {
+  color: #00e5ff;
+}
+
+/* 🎯 Buttons */
+.profile-buttons .btn {
+  display: inline-block;
+  margin: 10px 8px;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #ffc107, #ff9800);
+  color: #000;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #00c853, #1b5e20);
+  color: #fff;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ✨ Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<div class="profile-section">
+  <!-- 🎥 Background Video -->
+  <video autoplay muted loop>
+    <source src="https://cdn.pixabay.com/vimeo/313297558/blue-19162.mp4?width=640&hash=3b4b548e8b1b2b87f6e94b3c7dbf9b01e4d0e8e4" type="video/mp4">
+  </video>
+
+  <div class="profile-container">
+    <h3>👤 My Profile</h3>
+
+    <div class="profile-card">
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email|default:"Not Provided" }}</p>
+      <p><strong>Last Login:</strong> {{ user.last_login|date:"d M Y, h:i A" }}</p>
+      <p><strong>Account Created:</strong> {{ user.date_joined|date:"d M Y, h:i A" }}</p>
+    </div>
+
+    <div class="profile-buttons">
+      <a href="{% url 'change_password' %}" class="btn btn-warning">🔑 Change Password</a>
+      <a href="{% url 'dashboard' %}" class="btn btn-success">⬅ Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
